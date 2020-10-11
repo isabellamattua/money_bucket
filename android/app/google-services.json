@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "225970107595",
-    "firebase_url": "https://moneybucket-292113.firebaseio.com",
-    "project_id": "moneybucket-292113",
-    "storage_bucket": "moneybucket-292113.appspot.com"
+    "project_number": "387157561203",
+    "firebase_url": "https://moneybucket-56d09.firebaseio.com",
+    "project_id": "moneybucket-56d09",
+    "storage_bucket": "moneybucket-56d09.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:225970107595:android:77f59705020f8c4ef7574e",
+        "mobilesdk_app_id": "1:387157561203:android:b227e66a09d033f70b7f06",
         "android_client_info": {
           "package_name": "online.money_bucket"
         }
       },
       "oauth_client": [
         {
-          "client_id": "225970107595-reks85lsk09g6bltn2iem41hvt15u4bd.apps.googleusercontent.com",
+          "client_id": "387157561203-v7smco46mkr39enu4anj55el0qp4hgfc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCFkjFTmxaLgI_LboGsEuarUkG4HJM7rEA"
+          "current_key": "AIzaSyDeiMKMA8OL_5eTjN29miJJjCCEFNamMT4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "225970107595-reks85lsk09g6bltn2iem41hvt15u4bd.apps.googleusercontent.com",
+              "client_id": "387157561203-v7smco46mkr39enu4anj55el0qp4hgfc.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

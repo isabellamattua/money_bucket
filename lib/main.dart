@@ -214,17 +214,19 @@ class SettingsPage extends StatelessWidget {
 class AccountInfo extends StatelessWidget {
 
   Widget blueBox =Container(
-    width: 350,
-    height: 440,
-    decoration: BoxDecoration(
-    color: const Color(0xFFE8E8E8),
-        border: Border.all(
-            color: const Color(0xFFE8E8E8),
-            width: 2
-        ),
-        borderRadius: BorderRadius.circular(8)
-    ),
-  );
+      child: Text(
+        'Account Info: \n  Available founds:    \t874.52 \n Last amount saved: \t1.62 \n',
+        style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+            background: Paint()
+              ..strokeWidth = 30.0
+              ..color = Colors.grey
+              ..style = PaintingStyle.stroke
+              ..strokeJoin = StrokeJoin.round),
+      )
+    );
+
 
   Widget buckets = Container(
     child: Row(
@@ -260,7 +262,7 @@ class AccountInfo extends StatelessWidget {
                 ),
               ),
               Text(
-                'Kandersteg, Switzerland',
+                'Miami, USA',
                 style: TextStyle(
                   color: Colors.grey[500],
                 ),
