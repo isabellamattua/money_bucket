@@ -1,14 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:flutter/services.dart';
 import 'package:imagebutton/imagebutton.dart';
-import 'package:flutter_counter/flutter_counter.dart';
-import 'dart:async' show Future;
-import 'package:flutter/services.dart' show rootBundle;
-
-
 
 void main() => runApp(MyApp());
 
@@ -18,8 +10,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Money Bucket",
       home: Home(),
-
-      home: AccountInfo(),
     );
   }
 }
@@ -27,8 +17,6 @@ class MyApp extends StatelessWidget {
 class Gear extends StatefulWidget {
   @override
   _GearState createState() => _GearState();
-
-
 }
 
 class _GearState extends State<Gear> {
@@ -53,7 +41,6 @@ class _GearState extends State<Gear> {
   }
 }
 
-
 class CounterW extends StatefulWidget {
   @override
   _CounterWState createState() => _CounterWState();
@@ -75,8 +62,6 @@ class _CounterWState extends State<CounterW> {
   }
 }
 
-
-
 class MyStatefulWidget extends StatefulWidget {
   MyStatefulWidget({Key key}) : super(key: key);
 
@@ -91,14 +76,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   //final Widget widgetHolder = counter;
   final _formKey = GlobalKey<FormState>();
 
-
-
-
   @override
   Widget build(BuildContext context) {
-
-
-
     return DropdownButton<String>(
       value: dropdownValue,
       icon: Icon(Icons.arrow_downward),
@@ -131,10 +110,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   child :CounterW()
               );
             }
-
-
-
-
       },
       items: <String>['Round Up to the Nearest dollar','Fixed Amount', 'Round Up to the Nearest dollar + Fixed Amount']
           .map<DropdownMenuItem<String>>((String value) {
@@ -145,11 +120,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       }).toList(),
     );
   }
-
-
-
-
-
 }
 
 class SettingsPage extends StatelessWidget {
@@ -167,7 +137,6 @@ class SettingsPage extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: Text(
-
                   '\nChoose your way of saving:',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -183,15 +152,11 @@ class SettingsPage extends StatelessWidget {
                 ),
               ),
             ],
-
           ),
         ),
-
       ],
     ),
   );
-
-
 
   Widget titleSection = Container(
     padding: const EdgeInsets.all(32),
@@ -222,17 +187,11 @@ class SettingsPage extends StatelessWidget {
                 ),
               ),
             ],
-
           ),
         ),
-
       ],
     ),
   );
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -246,21 +205,13 @@ class SettingsPage extends StatelessWidget {
           question,
           MyStatefulWidget(),
           //buckets,
-
         ],
       ),
     );
   }
 }
 
-
-
-// ···
-
-
-
 class AccountInfo extends StatelessWidget {
-
 
   Widget blueBox =Container(
     width: 350,
@@ -275,7 +226,6 @@ class AccountInfo extends StatelessWidget {
     ),
   );
 
-
   Widget buckets = Container(
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -286,8 +236,6 @@ class AccountInfo extends StatelessWidget {
       ],
     )
   );
-
-
 
   Widget titleSection = Container(
     padding: const EdgeInsets.all(32),
@@ -327,8 +275,6 @@ class AccountInfo extends StatelessWidget {
     ),
   );
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -347,12 +293,7 @@ class AccountInfo extends StatelessWidget {
   }
 }
 
-
-
 /// This is the stateless widget that the main application instantiates.
-
-
-
 class Home extends StatelessWidget {
   final fireAuth = FirebaseAuth.instance;
 
@@ -433,7 +374,7 @@ class _LandingPageState extends State<LandingPage> {
                     final result = await fireAuth.signInWithEmailAndPassword(email: _email, password: _password);
                     Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (BuildContext context) => Account(),
+                          builder: (BuildContext context) => AccountInfo(),
                         )
                     );
                   }

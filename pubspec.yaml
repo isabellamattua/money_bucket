@@ -22,7 +22,6 @@ environment:
 
 dependencies:
   imagebutton: ^0.0.6
-  flutter_counter: ^1.0.3
   flutter:
     sdk: flutter
 
