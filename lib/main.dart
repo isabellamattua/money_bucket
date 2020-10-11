@@ -1,117 +1,501 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:imagebutton/imagebutton.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      title: "Money Bucket",
+      home: Home(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
+class Gear extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _GearState createState() => _GearState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+class _GearState extends State<Gear> {
+  @override
+  Widget build(BuildContext context) {
+    return ImageButton(
+      children: <Widget>[],
+      width: 39,
+      height: 39,
+      paddingTop: 5,
+      pressedImage: Image.asset(
+        "assets/gear.png",
+      ),
+      unpressedImage: Image.asset("assets/gear.png"),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SettingsPage()),
+        );
+      },
+    );
   }
+}
+
+class CounterW extends StatefulWidget {
+  @override
+  _CounterWState createState() => _CounterWState();
+}
+
+class _CounterWState extends State<CounterW> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Text(
+
+        '\nChoose your way of saving:',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color:const Color(0xFF041B15) ,
+          fontSize: 20,
+        ),
+      ),);
+  }
+}
+
+class MyStatefulWidget extends StatefulWidget {
+  MyStatefulWidget({Key key}) : super(key: key);
+
+  @override
+  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
+}
+
+/// This is the private State class that goes with MyStatefulWidget.
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  String dropdownValue ="Round Up to the Nearest dollar + Fixed Amount";
+  bool _isVisible = false;
+  //final Widget widgetHolder = counter;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+    return DropdownButton<String>(
+      value: dropdownValue,
+      icon: Icon(Icons.arrow_downward),
+      iconSize: 24,
+      elevation: 16,
+      style: TextStyle(color: Colors.green[800]),
+      underline: Container(
+        height: 2,
+        color: Colors.lightGreen,
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+      onChanged: (String newValue) {
+          dropdownValue = newValue;
+          print(dropdownValue);
+            if (dropdownValue == "Fixed Amount" || dropdownValue ==
+            "Round Up to the Nearest dollar + Fixed Amount") {
+              _isVisible = true;
+            //Counter.vi
+            } else {
+              _isVisible = false;
+            }
+
+            if (_isVisible){
+              Visibility(
+                visible: true,
+                child :CounterW()
+              );
+            } else{
+              Visibility(
+                  visible: false,
+                  child :CounterW()
+              );
+            }
+      },
+      items: <String>['Round Up to the Nearest dollar','Fixed Amount', 'Round Up to the Nearest dollar + Fixed Amount']
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
+  }
+}
+
+class SettingsPage extends StatelessWidget {
+
+  Widget question = Container(
+    padding: const EdgeInsets.all(32),
+    child: Row(
+      children: [
+        Expanded(
+          /*1*/
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /*2*/
+              Container(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Text(
+                  '\nChoose your way of saving:',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color:const Color(0xFF041B15) ,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              Text(
+                '    ',
+                style: TextStyle(
+                  color: Colors.grey[500],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+
+  Widget titleSection = Container(
+    padding: const EdgeInsets.all(32),
+    child: Row(
+      children: [
+        Expanded(
+          /*1*/
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /*2*/
+              Container(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Text(
+
+                  '\nSettings',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color:const Color(0xFF041B15) ,
+                    fontSize: 30,
+                  ),
+                ),
+              ),
+              Text(
+                'Set up the preferences for your account',
+                style: TextStyle(
+                  color: Colors.grey[500],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      //appBar: AppBar(
+      //title: Text("Money Bucket"),
+      // ),
+      body: Column(
+        children: <Widget>[
+          titleSection,
+          question,
+          MyStatefulWidget(),
+          //buckets,
+        ],
+      ),
+    );
+  }
+}
+
+class AccountInfo extends StatelessWidget {
+
+  Widget blueBox =Container(
+    width: 350,
+    height: 440,
+    decoration: BoxDecoration(
+    color: const Color(0xFFE8E8E8),
+        border: Border.all(
+            color: const Color(0xFFE8E8E8),
+            width: 2
+        ),
+        borderRadius: BorderRadius.circular(8)
+    ),
+  );
+
+  Widget buckets = Container(
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Image.asset('assets/new-b1.png'),
+        Image.asset('assets/new-b2.png'),
+        Image.asset('assets/new-b3.png'),
+      ],
+    )
+  );
+
+  Widget titleSection = Container(
+    padding: const EdgeInsets.all(32),
+    child: Row(
+      children: [
+        Expanded(
+          /*1*/
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /*2*/
+              Container(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Text(
+
+                  '\nHi Jerge',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color:const Color(0xFF041B15) ,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              Text(
+                'Kandersteg, Switzerland',
+                style: TextStyle(
+                  color: Colors.grey[500],
+                ),
+              ),
+            ],
+          ),
+        ),
+        /*3*/
+
+          Gear(),
+      ],
+    ),
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      //appBar: AppBar(
+        //title: Text("Money Bucket"),
+     // ),
+      body: Column(
+        children: <Widget>[
+          titleSection,
+          blueBox,
+          buckets,
+
+        ],
+      ),
+    );
+  }
+}
+
+/// This is the stateless widget that the main application instantiates.
+class Home extends StatelessWidget {
+  final fireAuth = FirebaseAuth.instance;
+
+  @override
+  Widget build(BuildContext context) {
+    try {
+      fireAuth.signOut();
+    }
+    catch (e) {
+      print(e);
+    }
+    return Scaffold(
+      //appBar: AppBar(
+        //title: Text(""),
+      //),
+      body: LandingPage(),
+    );
+  }
+}
+
+class LandingPage extends StatefulWidget {
+
+  @override
+  _LandingPageState createState() {
+    return _LandingPageState();
+  }
+}
+
+class _LandingPageState extends State<LandingPage> {
+  final _formKey = GlobalKey<FormState>();
+  final fireAuth = FirebaseAuth.instance;
+  final formValues = <String>[];
+
+  Widget _loginForm() {
+    return Form(
+      key: _formKey,
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text("Money Bucket", style: TextStyle(fontSize: 40)),
+            Image.asset(
+              "assets/moneybucket.png",
+              height: 200,
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+            TextFormField(
+              decoration: InputDecoration(
+                //icon: Icon(Icons.person),
+                hintText: "Enter username",
+                labelText: "Username *",
+                contentPadding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+              ),
+              validator: (String value) {
+                formValues.add(value);
+                return;
+              },
+            ),
+            TextFormField(
+              obscureText: true,
+              decoration: InputDecoration(
+                //icon: Icon(Icons.person),
+                hintText: "Enter Password",
+                labelText: "Password *",
+                contentPadding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+              ),
+              validator: (String value) {
+                formValues.add(value);
+                return;
+              },
+            ),
+            RaisedButton(
+              onPressed: () async {
+                if (_formKey.currentState.validate()) {
+                  final _email = formValues[0];
+                  final _password = formValues[1];
+                  try {
+                    final result = await fireAuth.signInWithEmailAndPassword(email: _email, password: _password);
+                    Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => AccountInfo(),
+                        )
+                    );
+                  }
+                  catch (e) {
+                    print(e);
+                  }
+                }
+              },
+              child: const Text("Sign In", style: TextStyle(fontSize: 20, color: Colors.black)),
+            ),
+            RaisedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => RegistrationPage(),
+                  )
+                );
+              },
+              child: const Text("Register", style: TextStyle(fontSize: 20, color: Colors.white)),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _loginForm();
+  }
+}
+
+class Account extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Account"),
+      ),
+      body: Column(
+        children: [
+          Text("Test"),
+        ],
+      ),
     );
   }
 }
+
+class RegistrationPage extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
+  final fireAuth = FirebaseAuth.instance;
+  final formValues = <String>[];
+
+  Widget Registration(context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          TextFormField(
+            decoration: InputDecoration(
+              icon: Icon(Icons.person),
+              hintText: "Enter your email address",
+              labelText: "Email *"
+            ),
+            validator: (String val) {
+              formValues.add(val);
+              return;
+            },
+          ),
+          TextFormField(
+            obscureText: true,
+            decoration: InputDecoration(
+              icon: Icon(Icons.person),
+              hintText: "Enter a password",
+              labelText: "Password *",
+            ),
+            validator: (String val) {
+              formValues.add(val);
+              return;
+            },
+          ),
+          RaisedButton(
+            onPressed: () {
+              if (_formKey.currentState.validate()) {
+                // TODO: Update validator functions
+                // PASSWORD MUST BE AT LEAST 6 CHARACTERS
+                final _email = formValues[0];
+                final _password = formValues[1];
+                fireAuth.createUserWithEmailAndPassword(email: _email, password: _password);
+              }
+              Navigator.pop(context);
+            },
+            child: const Text("Register", style: TextStyle(fontSize: 20),),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Account Registration"),
+      ),
+      body: Registration(context),
+    );
+  }
+}
+
+class SavingPreferencesPage extends StatefulWidget {
+  @override
+  _SavingPreferencesPageState createState() => _SavingPreferencesPageState();
+}
+
+class _SavingPreferencesPageState extends State<SavingPreferencesPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
