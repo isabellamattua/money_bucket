@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import "package:cloud_firestore/cloud_firestore.dart";
 
 void main() => runApp(MyApp());
 
@@ -7,81 +8,153 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Money Bucket",
-      home: Landing(),
+      home: Home(),
     );
   }
 }
 
-class Landing extends StatelessWidget {
+class Home extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      //appBar: AppBar(
+        //title: Text(""),
+      //),
+      body: LandingPage(),
+    );
+  }
+}
+
+class LandingPage extends StatefulWidget {
+
+  @override
+  _LandingPageState createState() {
+    return _LandingPageState();
+  }
+}
+
+class _LandingPageState extends State<LandingPage> {
   final _formKey = GlobalKey<FormState>();
 
   Widget _loginForm() {
     return Form(
-        key: _formKey,
+      key: _formKey,
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
         child: Column(
-          children: <Widget>[
-            TextFormField(
-              decoration: const InputDecoration(
-                icon: Icon(Icons.person),
-                hintText: "your email address",
-                labelText: "Username *",
-              ),
-              onSaved: (String value) {
-                // Code to do something when user saves form
-              },
-              validator: (String value) {
-                // Check the input to make sure its ok
-              },
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text("Money Bucket", style: TextStyle(fontSize: 40)),
+            Image.asset(
+              "assets/moneybucket.png",
+              height: 200,
             ),
             TextFormField(
-              decoration: const InputDecoration(
-                icon: Icon(Icons.person),
-                hintText: "your password",
-                labelText: "Password *",
+              decoration: InputDecoration(
+                //icon: Icon(Icons.person),
+                hintText: "Enter username",
+                labelText: "Username *",
+                contentPadding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
               ),
-              onSaved: (String value) {
-                // Code to do something when user saves form
-              },
-              validator: (String value) {
-                // Input validation
-              },
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                //icon: Icon(Icons.person),
+                hintText: "Enter Password",
+                labelText: "Password *",
+                contentPadding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+              ),
             ),
             RaisedButton(
-              onPressed: () {},
-              child: Text("Submit"),
-            )
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => Account(),
+                  )
+                );
+              },
+              child: const Text("Sign In", style: TextStyle(fontSize: 20, color: Colors.black)),
+            ),
+            RaisedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => RegistrationPage(),
+                  )
+                );
+              },
+              child: const Text("Register", style: TextStyle(fontSize: 20, color: Colors.white)),
+            ),
           ],
-        )
+        ),
+      ),
     );
   }
 
-  Widget _logoArea(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints.expand(
-        height: 200,
+  @override
+  Widget build(BuildContext context) {
+    return _loginForm();
+  }
+}
+
+class Account extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Account"),
       ),
-      color: Colors.green,
-      alignment: Alignment.center,
-      child: Text("Money Bucket",
-          style: Theme.of(context)
-              .textTheme
-              .headline4
-              .copyWith(color: Colors.white)),
-      );
+      body: Column(
+        children: [
+          Text("Test"),
+        ],
+      ),
+    );
+  }
+}
+
+class RegistrationPage extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
+
+  Widget Registration() {
+    return Form(
+      key: _formKey,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          TextFormField(
+            decoration: InputDecoration(
+              icon: Icon(Icons.person),
+              hintText: "Enter your email address",
+              labelText: "Email *"
+            ),
+          ),
+          TextFormField(
+            decoration: InputDecoration(
+              icon: Icon(Icons.person),
+              hintText: "Enter a password",
+              labelText: "Password *",
+            ),
+          ),
+          RaisedButton(
+            onPressed: () {
+
+            },
+            child: const Text("Register", style: TextStyle(fontSize: 20),),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Money Bucket"),
+        title: Text("Account Registration"),
       ),
-      body: Column(
-        children: <Widget>[
-          _logoArea(context),
-          _loginForm(),
-        ],
-      ),
+      body: Registration(),
     );
   }
 }
